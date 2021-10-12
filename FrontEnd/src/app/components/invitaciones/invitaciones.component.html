@@ -1,0 +1,32 @@
+<div>
+    <app-header></app-header>
+  </div>
+<div class="container buena" >
+
+
+<!--     <div id="datosForm">
+        Hola<h1>{{datosForm?.email}}</h1>  te han invitado a participar al proyecto <h1>{{datosForm?.projectId}}</h1> con el rol <h1>{{datosForm?.rol}}</h1> 
+    </div> --> 
+    <div id="salida" class="text-center" style="background: #eeeeeed6; ">
+        <h2 class="color">Hola</h2>
+        <h2>{{salida?.emailDes}}</h2>  
+        <h2 class="color">te han invitado a participar al proyecto </h2>
+        <h2>{{salida?.nombre}}</h2> 
+        <h2 class="color">en el que desempeñarás el rol de</h2> 
+        <h2>{{salida?.rolDes}}</h2> 
+    </div> 
+    <div class="mt-5 ">
+        <div class="text-center">
+            <button type="button" class="btn btn-success" style="width: 300px;" (click)="aceptar()">Aceptar invitación</button>
+        </div>
+        <div class="alert alert-success mt-3" role="alert" *ngIf='ok'>
+            {{msg}}
+            <i class="fas fa-sync fa-spin fa-lg" style=" float: right;"></i>
+        </div>
+        <div class="mt-5">
+            <h6 class="color">Si no reconece esta invitacion por favor <a href="Proyectos">haga clic aquí</a> para ignorarla.</h6>
+        </div>
+        
+    </div>
+    
+</div>
