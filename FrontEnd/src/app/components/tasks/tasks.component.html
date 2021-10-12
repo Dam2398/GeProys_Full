@@ -1,0 +1,144 @@
+<div>
+  <app-header></app-header>
+</div>
+<!-- Bar Proyects -->
+<div class="container buena">
+    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+      <div class="row">
+        <div class="col">
+          </div>
+            <div class="col-6 text-center" style="padding: 2rem; height: 5rem;">
+                <h3>{{infoProject?.name}}</h3>
+                <h6>{{infoProject?.description}}</h6>
+            </div>
+          <div class="col">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" style="height: 3rem;"></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+        <!-- DropDowns -->
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a style="background-color: #B98EFF; margin-bottom: 10%; color: white; height: 40px; border-radius: 5px;padding: 8px; padding-left: 37%;">SPRINTS</a>
+            <a *ngFor="let sprint of sprints" [ngClass]="(sprint.id == this.selectedItem)?'nav-link active':'nav-link'" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true" (click)="printSprint(sprint)">{{sprint.name}}</a>
+          </div>
+        </div>
+      <div class="col">
+        <!-- Tareas -->
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Daily Scrum</th>
+              <th scope="col">Fecha Inicio</th>
+              <th scope="col">Fecha Fin</th>
+              <th>
+                  <button *ngIf="roleUser != 'Developer'" type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#NewSprint">Agregar Sprint</button>
+              </th>
+              <th>
+                <i class="fas fa-chalkboard-teacher fa-2x"  role="button" (click)="onKanbas()"></i>
+              </th>
+              <th>
+                <!--AQUII-->
+                <i class="fas fa-comments fa-2x"  role="button" (click)="onChat()"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">{{this.daily}}</th>
+              <td>{{this.beginDate}}</td>
+              <td>{{this.endDate}}</td>
+              <td *ngIf="buttonBacklog">
+                  <button type="button" class="btn btn-warning btn-sm" (click)="seeSprint(this.selectedItem)">Backlog</button>
+              </td>
+              <td *ngIf="buttonShown"><!--AQUI ES DAM-->
+                <i class="far fa-chart-bar fa-2x" role="button" style="float:left" (click)="goChart(this.selectedItem)"></i>
+              </td>
+              <td *ngIf="buttonShown">
+                <button *ngIf="roleUser != 'Developer'" type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#NewTask">+ Tarea</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div class="modal fade" id="NewSprint" tabindex="-1" aria-labelledby="NewSprintLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="NewSprintLabel">Agregar Sprint</h5>
+            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="SprintName">Nombre</label>
+                <input type="text" class="form-control" [(ngModel)]="newSprint.name" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group">
+                <label for="example-time-input">Daily</label>
+                  <input class="form-control" type="time" id="example-time-input" [(ngModel)]="newSprint.daily" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group">
+                <label for="example-date-input">Fecha de inicio</label>
+                  <input class="form-control" type="date" [(ngModel)]="newSprint.fechaInicio" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group">
+                <label for="example-date-input">Fecha final</label>
+                  <input class="form-control" type="date" [(ngModel)]="newSprint.fechaFin" [ngModelOptions]="{standalone: true}">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="addNewSprint()" data-bs-dismiss="modal">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="NewTask" tabindex="-1" aria-labelledby="NewTaskLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="NewTaskLabel">Agregar Tarea</h5>
+            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="TaskName">Nombre</label>
+                <input type="text" class="form-control" [(ngModel)]="newTask.name" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group">
+                <label for="TaskDescription">Descripción</label>
+                <input type="text"  style="height: 100px" class="form-control" [(ngModel)]="newTask.description" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group">
+                <label for="TaskStatus">Status</label><br>
+                <select class="form-select form-control" [(ngModel)]="newTask.status" [ngModelOptions]="{standalone: true}">
+                  <option value="NotDone">Sin hacer</option>
+                  <option value="InProgress">En Progreso</option>
+                  <option value="Done">Hecho</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="TaskPriority">Prioridad</label><br>
+                <select class="form-select form-control" [(ngModel)]="newTask.priority" [ngModelOptions]="{standalone: true}">
+                  <option value="Prioritario">Prioritario</option>
+                  <option value="Urgente">Urgente</option>
+                  <option value="Importante">Importante</option>
+                  <option value="Necesario">Necesario</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="addNewTask()" data-bs-dismiss="modal">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
