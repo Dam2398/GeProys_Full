@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="col text-center" style="height: 5rem;">
+        <h1>Registrarse</h1>
+    </div>
+    <div class="col text-center">
+        <form>
+            <div class="form-row">
+              <div class="col mb-3">
+                <label>Nombre</label>
+                <input name="firstName" type="text" class="form-control" :value={{newUser.firstName}} required [(ngModel)]="newUser.firstName" [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col mb-3">
+                <label>Apellidos</label>
+                <input type="text" class="form-control" :value={{newUser.lastName}} required [(ngModel)]="newUser.lastName" [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label>Email</label>
+                  <input type="email" class="form-control" :value={{newUser.email}} required [(ngModel)]="newUser.email" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label>Contraseña</label>
+                  <input type="password" class="form-control"required [(ngModel)]="newUser.password" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+        </form>
+        <button type="button" class="btn btn-primary" (click)="addNewUser()">Registrarse</button>
+      </div>
+</div>

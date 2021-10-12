@@ -1,0 +1,22 @@
+<div>
+  <app-header></app-header>
+</div>
+<div class="container buena">
+  <div class="col text-center" style="height: 5rem;">
+    <h1>Agenda</h1>
+  </div>
+  <div class="row">
+    <div *ngFor="let item of CalenderTotal" class="col-sm-4">
+      <div class="card" style="width: 20rem; margin-bottom: 20px;">
+        <div class="card-header text-white" [ngStyle]="{'background-color': (item.begin_end === 'Inicio de Sprint')?'#85D381': '#FF5252'}">
+        {{item.begin_end}}: {{item.sprintName}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{item.nameProject}}</h5>
+          <p class="card-text">Fecha: {{item.date}}<br></p>
+          <div class="card-footer text-muted">Daily: {{item.daily}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

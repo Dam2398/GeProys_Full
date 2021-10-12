@@ -1,0 +1,80 @@
+<div>
+  <app-header></app-header>
+</div>
+<!-- Bar Proyects -->
+<div class="container buena">
+<!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  <div class="row">
+    <div class="col">
+      </div>
+        <div class="col-6 text-center" style="padding: 2rem; height: 5rem;">
+          <h3>PROYECTOS</h3>
+        </div>
+      <div class="col">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" style="height: 3rem;"></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+    <!-- DropDowns -->
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a *ngFor="let project of projects" [ngClass]="(project.id == this.selectedItem)?'nav-link active':'nav-link'" id="v-pills-home-tab" data-toggle="pill" role="tab" aria-controls="v-pills-home" aria-selected="true" (click)="printProject(project)">{{project.name}}</a>
+      </div>
+    </div>
+  <div class="col">
+    <!-- Tareas -->
+    <table *ngIf="tableShown" class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha de Inicio</th>
+          <th scope="col"></th>
+          <th>
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#NewProject">Agregar Proyecto</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{this.ProjectName}}</th>
+          <td>{{this.ProjectDate}}</td>
+          <td>
+              <button type="button" class="btn btn-info btn-sm" (click)="seeTasks(this.selectedItem)">Backlog</button>
+          </td>
+          <td>
+              <button type="button" class="btn btn-warning btn-sm" (click)="seeDevelopment(this.selectedItem)"> Development Team</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <router-outlet></router-outlet>
+    <div class="modal fade" id="NewProject" tabindex="-1" aria-labelledby="NewProjectLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="NewProjectLabel">Agregar Proyecto</h5>
+            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="ProjectName">Nombre</label>
+                <input type="text" class="form-control" [(ngModel)]="newProject.name" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group">
+                <label for="ProjectDescription" >Descripción</label>
+                <input type="text" style="height: 100px" class="form-control" [(ngModel)]="newProject.description" [ngModelOptions]="{standalone: true}">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="addNewProject()" data-bs-dismiss="modal">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
