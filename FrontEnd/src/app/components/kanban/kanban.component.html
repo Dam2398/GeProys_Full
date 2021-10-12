@@ -1,0 +1,61 @@
+<app-header></app-header>
+
+<div class="container buena">
+
+    <div class="row">
+        <div  class="col order-first mx-1  shadow" style="background-color: #e2dfdc; border-radius: 9px;">
+            <h5 class="text-center" style="color: black;">Backlog</h5>
+            <div id="output" *ngFor="let data of output" >
+                <div class="card mb-1  shadow espacio" style="border-radius: 10px;">
+                    <div class="card-body border border-dark"style="color: black; border-radius: 10px;" [ngStyle]="{'background-color':data?.prioridad === 'Prioritario' ? '#FF1212' : data?.prioridad === 'Urgente' ? '#E98704' :  data.prioridad === 'Importante' ? '#FFFF50' : '#00E117' }">
+                        <h6 class="card-title" style="color: black;">{{data.titulo}}</h6>
+                        <p class="card-text">{{data.texto}}</p>
+                    </div>
+                </div> 
+            </div>
+            
+        </div>
+        <div class="col order-2 mx-1  shadow" style="background-color: #d2505f; border-radius: 9px;">
+            <h5 class="text-center" style="color: black;" >Por hacer</h5>
+            <div id="outputTres" class="mb-1 shadow" *ngFor="let data of outputTres">
+                <div class="espacio" *ngIf="data.status==='NotDone'">
+                    <div class="card " >
+                        <div class="card-body" [ngStyle]="{'background-color':data?.prioridad === 'Prioritario' ? '#FF1212' :data.prioridad === 'Urgente' ? '#E98704' :  data.prioridad === 'Importante' ? '#FFFF50' : '#00E117' }">
+                            <h6 class="card-title" style="color: black;">{{data.titulo}}</h6>
+                            <p class="card-text">{{data.texto}}</p>
+                        </div>
+                    </div>  
+                    <p class="card-footer"  style="background-color: #f7f7f7; text-align: inherit; white-space: normal; word-break: break-word!important; word-wrap: break-word!important;" >{{data.miembro}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col order-3 mx-1  shadow" style="background-color: #86c7f3; border-radius: 9px;">
+            <h5 class="text-center" style="color: black;">En progreso</h5>
+            <div id="outputTres" class="mb-1 shadow" *ngFor="let data of outputTres">
+                <div class="espacio" *ngIf="data.status==='InProgress'">
+                    <div class="card " >
+                        <div class="card-body" [ngStyle]="{'background-color':data?.prioridad === 'Prioritario' ? '#FF1212' :data.prioridad === 'Urgente' ? '#E98704' :  data.prioridad === 'Importante' ? '#FFFF50' : '#00E117' }">
+                            <h6 class="card-title" style="color: black;">{{data.titulo}}</h6>
+                            <p class="card-text" >{{data.texto}}</p>
+                        </div>
+                    </div>  
+                    <p class="card-footer" style="background-color: #f7f7f7; text-align: inherit; white-space: normal; word-break: break-word!important; word-wrap: break-word!important;">{{data.miembro}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col order-last mx-1  shadow" style="background-color: #71cc55; border-radius: 9px;">
+            <h5 class="text-center" style="color: black;">Hecho</h5>
+            <div id="outputTres" class="mb-1 shadow" *ngFor="let data of outputTres">
+                <div class="espacio" *ngIf="data.status==='Done'">
+                    <div class="card " >
+                        <div class="card-body" [ngStyle]="{'background-color':data?.prioridad === 'Prioritario' ? '#FF1212' :data.prioridad === 'Urgente' ? '#E98704' :  data.prioridad === 'Importante' ? '#FFFF50' : '#00E117' }">
+                            <h6 class="card-title" style="color: black;">{{data.titulo}}</h6>
+                            <p class="card-text">{{data.texto}}</p>
+                        </div>
+                    </div>  
+                    <p class="card-footer"  style="background-color: #f7f7f7; text-align: inherit; white-space: normal; word-break: break-word!important; word-wrap: break-word!important;">{{data.miembro}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
