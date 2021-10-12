@@ -1,0 +1,65 @@
+<div *ngFor="let item of oneTask" class="card text-center" style="width: 100%; margin-bottom: 5%;">
+    <div class="card-header" [ngStyle]="{'background-color':item?.priority === 'Prioritario' ? '#FF1212' : item.priority === 'Urgente' ? '#E98704' :  item.priority === 'Importante' ? '#FFFF50' : '#00E117' }">
+        <h5 class="card-title" style="color: black;">{{item?.name}}</h5>
+    </div>
+    <div class="card-body">
+      <h5 class="card-subtitle mb-2 text-muted">{{item?.priority}}</h5>
+      <p class="card-text">{{item?.description}}</p>
+      <div style="margin-bottom: 2%;">
+        <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#EditTask" [disabled]='item.modalOn == false' (click)="seeTask(item)">Editar</button>
+      </div>
+      <div class="card-footer text-muted">
+        Status: {{item?.status}} &nbsp; &nbsp; {{item?.assigned}}
+      </div>
+    </div>
+  </div>
+  <!--Modal edit Tarea-->
+  <div class="modal fade" id="EditTask" tabindex="-1" aria-labelledby="EditTaskLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditTaskLabel">Editar Tarea</h5>
+          <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="TaskName"><h5>Nombre</h5>{{editTask.name}}</label>
+            </div>
+            <div class="form-group">
+              <label for="TaskDescription"><h5>Descripción</h5>{{editTask.description}}</label>
+            </div>
+            <div class="form-group">
+              <label for="TaskStatus">Status</label><br>
+              <select class="form-select form-control" [(ngModel)]="editTask.status" [ngModelOptions]="{standalone: true}">
+                <option selected>{{editTask.status}}</option>
+                <option *ngIf="editTask.status != 'Sin hacer'" value="Sin hacer">Sin hacer</option>
+                <option *ngIf="editTask.status != 'En Progreso'" value="En Progreso">En Progreso</option>
+                <option *ngIf="editTask.status != 'Hecho'" value="Hecho">Hecho</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="TaskPriority">Prioridad</label><br>
+              <select class="form-select form-control" [(ngModel)]="editTask.priority" [ngModelOptions]="{standalone: true}">
+                <option selected>{{editTask.priority}}</option>
+                <option *ngIf="editTask.priority != 'Prioritario'" value="Prioritario">Prioritario</option>
+                <option *ngIf="editTask.priority != 'Urgente'" value="Urgente">Urgente</option>
+                <option *ngIf="editTask.priority != 'Importante'" value="Importante">Importante</option>
+                <option *ngIf="editTask.priority != 'Necesario'" value="Necesario">Necesario</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Assignation">Asignado a:</label><br>
+              <select class="form-select form-control" [(ngModel)]="editTask.urpId" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let item of teams" [value]="item?.urpId">{{item?.name}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal" (click)="addEditTask()">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>

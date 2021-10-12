@@ -1,0 +1,90 @@
+
+<app-header></app-header>
+
+
+<div class="container buena" style="display: block; width: 90%; height: 80%;"> 
+  
+  <div class="row">
+    
+    <div class="col-2 " style="position: fixed;">
+      <button (click)="makePDF()" type="button" class="btn btn-info" style="margin-top: 100px;">
+        Generar Reporte
+      </button>
+      <div class="container " style="margin-bottom: 30px; float: left;" >
+        <div>
+          <button class="btn btn-primary mx-2 my-2" (click)="randomize()" [ngClass]="barras ? 'btn btn-primary' : 'btn btn-secondary'">{{ActBar}} gráfico de barras</button>
+          <div><button *ngIf="barras" type="button" class="btn btn-success" style="float:left" (click)="com1=!com1">Comentario</button></div>
+        </div>
+        <div>
+          <button  class="btn btn-primary mx-2 my-2" (click)="ranpastel()" [ngClass]="pastel ? 'btn btn-primary' : 'btn btn-secondary'">{{ActPas}} gráfico de pastel</button>
+          <div><button *ngIf="pastel" type="button" class="btn btn-success" style="float:left" (click)="com2=!com2">Comentario</button></div>
+        </div>
+        <div> 
+          <button  class="btn btn-primary mx-2 my-2" (click)="ranlineal()" [ngClass]="pendiente ? 'btn btn-primary' : 'btn btn-secondary'">{{ActPen}} gráfico de trabajo pendiente</button>
+          <div><button *ngIf="pendiente" type="button" class="btn btn-success" style="float:left" (click)="com3=!com3">Comentario</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-10" id="content" #content style="margin-left: 170px;">
+      <!--Asi como esta jala-->
+      <div class="text-center"> <h1>{{sprintNombre}}</h1><h6><b>{{fechaInSa}}</b> al <b>{{fechaFiSa}}</b> </h6> </div><h5 style="float: right;">{{hoy}}</h5>
+      
+      <div *ngIf="barras" style="margin-top: 30px;">
+          <canvas baseChart 
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+          </canvas>
+          <div class="container"  *ngIf='com1'>
+            <label for="exampleFormControlTextarea1">Observaciones</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div> 
+        </div >
+        <div *ngIf="pastel" style="margin-top: 30px;">
+          <div class="chart">
+            <canvas baseChart
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [options]="pieChartOptions"
+              [colors]="pieChartColors"
+              [plugins]="pieChartPlugins"
+              [legend]="pieChartLegend">
+            </canvas>
+          </div>
+          <div class="container" *ngIf='com2'>
+            <label for="exampleFormControlTextarea1">Observaciones</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </div>
+        <div *ngIf="pendiente" style="margin-top: 30px;">
+          <div style="text-align: center;"><h4>De <b>{{fechaInSa}}</b> al <b>{{fechaFiSa}}</b> </h4> </div>
+          <canvas style="margin-top: 30px;" baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+          </canvas>
+          <div class="container"  *ngIf='com3'>
+            <label for="exampleFormControlTextarea1">Observaciones</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </div>
+        
+    </div>
+    
+  </div>
+  
+
+  
+  
+</div>
+
+
+
+  
